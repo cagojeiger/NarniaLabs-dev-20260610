@@ -60,11 +60,15 @@ data/cache/
 *.pem
 secrets.*
 
-# ---- OMC (oh-my-claudecode) state ----
-.omc/state/
-.omc/logs/
-.omc/research/
-.omc/notepad.md
+# ---- Dotfiles: 기본 무시, 필요한 것만 예외 ----
+.*
+!.gitignore
+!.gitattributes
+!.env.example
+!.github/
+
+# ---- OMC (oh-my-claudecode) ----
+.omc/
 .omx/
 
 # ---- Editor / IDE ----
