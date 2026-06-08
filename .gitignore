@@ -1,0 +1,84 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# Package managers
+.uv/
+uv.lock
+pip-log.txt
+
+# ---- Testing / coverage ----
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# ---- Jupyter ----
+.ipynb_checkpoints/
+
+# ---- ML artifacts ----
+# 학습 산출물·체크포인트·대용량 데이터는 커밋하지 않음
+*.ckpt
+*.pt
+*.pth
+*.h5
+*.onnx
+*.pb
+*.safetensors
+wandb/
+mlruns/
+runs/
+lightning_logs/
+checkpoints/
+data/raw/
+data/cache/
+
+# ---- Secrets / env ----
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+secrets.*
+
+# ---- OMC (oh-my-claudecode) state ----
+.omc/state/
+.omc/logs/
+.omc/research/
+.omc/notepad.md
+.omx/
+
+# ---- Editor / IDE ----
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+
+# ---- Misc ----
+*.log
+.repos/
+tmp/
