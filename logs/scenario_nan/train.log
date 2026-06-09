@@ -1,8 +1,0 @@
-2026-06-09T10:12:26+00:00 [INFO] run start id=scenario_nan stage=train framework=pytorch device=cpu cuda=False
-2026-06-09T10:12:26+00:00 [INFO] config {"model": "SmallCNN", "dataset": "FashionMNIST", "optimizer": "SGD", "lr": 12.0, "epochs": 3, "batch_size": 64, "seed": 42, "train_limit": null, "fault_injected": "nan"}
-2026-06-09T10:12:27+00:00 [INFO] start training epochs=3 lr=12.0 batch_size=64
-2026-06-09T10:12:27+00:00 [INFO] epoch=0 step=1 train_loss=2.3051 grad_norm=0.8983 lr=12.0000
-2026-06-09T10:12:27+00:00 [INFO] epoch=0 step=7 train_loss=nan grad_norm=nan lr=12.0000
-2026-06-09T10:12:27+00:00 [ERROR] FloatingPointError: training loss became non-finite (loss=nan) at epoch=0 step=7; likely exploding gradients (grad_norm=nan, lr=12.0)
-2026-06-09T10:12:27+00:00 [ERROR] FloatingPointError: training loss became non-finite (loss=nan) at epoch=0 step=7; likely exploding gradients (grad_norm=nan, lr=12.0)
-2026-06-09T10:12:27+00:00 [INFO] run end status=failed duration_sec=0.52 steps=2 -> logs/scenario_nan/metrics.json

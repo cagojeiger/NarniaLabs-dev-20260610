@@ -23,7 +23,7 @@
    │     └ each: python -m mljob.<stage>        │        │   metrics.json  │
    │            │                               │        └────────▲───────┘
    │            ▼  telemetry.RunRecorder        │                 │
-   │   runs/<stage>/{train.log, metrics.json}   │─────────────────┘
+   │  .runs/<stage>/{train.log, metrics.json}   │─────────────────┘
    └─────────────────────────────────────────┘   파일(JSON) = 유일한 계약
 ```
 
@@ -37,7 +37,7 @@
 | 관측 신호 | 로그/메트릭을 표준 스키마로 기록 | `mljob/telemetry.py` (**우리가 설계한 계약**) |
 | 실행 환경 | 의존성 격리·재현 | Docker 이미지 (로컬 의존성 0) |
 
-**DAG 표현·실행 방식.** 노드는 `dvc.yaml`의 `stages`로 선언한다. DVC는 한 노드의 `outs`와 다른 노드의 `deps`가 같은 경로를 가리키면 **그 사이에 엣지를 자동 생성**한다 — 그래프를 수동으로 그릴 필요가 없다. 예: `train.outs = artifacts/model.pt`, `evaluate.deps ⊇ artifacts/model.pt` ⇒ `train → evaluate`. 실행은 `dvc repro`가 위상정렬 순서로 각 노드의 `cmd`를 서브프로세스로 돌린다. `dvc dag`로 그래프를 ASCII로 시각화한다(가산 항목).
+**DAG 표현·실행 방식.** 노드는 `dvc.yaml`의 `stages`로 선언한다. DVC는 한 노드의 `outs`와 다른 노드의 `deps`가 같은 경로를 가리키면 **그 사이에 엣지를 자동 생성**한다 — 그래프를 수동으로 그릴 필요가 없다. 예: `train.outs = .artifacts/model.pt`, `evaluate.deps ⊇ .artifacts/model.pt` ⇒ `train → evaluate`. 실행은 `dvc repro`가 위상정렬 순서로 각 노드의 `cmd`를 서브프로세스로 돌린다. `dvc dag`로 그래프를 ASCII로 시각화한다(가산 항목).
 
 **관측 신호 스키마(계약).** 모든 노드는 `telemetry.RunRecorder`를 통해 두 파일을 남긴다:
 - `train.log` — 타임스탬프·레벨이 붙은 텍스트 로그(실제 프레임워크 스타일). 에이전트의 **비정형 로그 파싱** 능력을 시험.

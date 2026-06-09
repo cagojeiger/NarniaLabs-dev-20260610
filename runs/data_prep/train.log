@@ -1,5 +1,0 @@
-2026-06-09T10:14:47+00:00 [INFO] run start id=data_prep stage=data_prep framework=pytorch device=cpu cuda=False
-2026-06-09T10:14:47+00:00 [INFO] config {"dataset": "FashionMNIST", "seed": 42, "n_train": 4000, "n_val": 1000, "n_test": 1000}
-2026-06-09T10:14:47+00:00 [INFO] downloading / loading FashionMNIST ...
-2026-06-09T10:14:48+00:00 [INFO] saved train=(4000, 1, 28, 28) val=(1000, 1, 28, 28) test=(1000, 1, 28, 28) -> data/processed
-2026-06-09T10:14:48+00:00 [INFO] run end status=succeeded duration_sec=1.13 steps=0 -> runs/data_prep/metrics.json

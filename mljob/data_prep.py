@@ -15,7 +15,7 @@ import torch
 from mljob import PROCESSED_DIR
 from mljob.telemetry import RunRecorder
 
-RAW_DIR = "data/raw"
+RAW_DIR = ".data/raw"
 
 # CPU 에서 빠르게 돌도록 작은 서브셋. (재현성 위해 seed 고정)
 N_TRAIN = 4000
@@ -53,7 +53,7 @@ def _load_fashion_mnist(seed: int):
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=42)
-    ap.add_argument("--run-dir", default="runs/data_prep")
+    ap.add_argument("--run-dir", default=".runs/data_prep")
     args = ap.parse_args()
 
     out = Path(PROCESSED_DIR)

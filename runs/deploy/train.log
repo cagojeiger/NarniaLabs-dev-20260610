@@ -1,4 +1,0 @@
-2026-06-09T10:14:53+00:00 [INFO] run start id=deploy stage=deploy framework=pytorch device=cpu cuda=False
-2026-06-09T10:14:53+00:00 [INFO] config {"target": "local", "strategy": "copy-artifact"}
-2026-06-09T10:14:53+00:00 [INFO] deployed -> artifacts/deployed (831025 bytes)
-2026-06-09T10:14:53+00:00 [INFO] run end status=succeeded duration_sec=0.49 steps=0 -> runs/deploy/metrics.json

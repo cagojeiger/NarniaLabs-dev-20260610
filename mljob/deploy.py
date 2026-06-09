@@ -17,7 +17,7 @@ from mljob.telemetry import RunRecorder
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--run-dir", default="runs/deploy")
+    ap.add_argument("--run-dir", default=".runs/deploy")
     args = ap.parse_args()
 
     cfg = {"target": "local", "strategy": "copy-artifact"}

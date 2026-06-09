@@ -4,19 +4,18 @@
 .repos
 .omc
 .omx
-__pycache__
 **/__pycache__
 *.pyc
 
-# 런타임 산출물 (컨테이너 안에서 새로 생성)
-data/
-artifacts/
-runs/
-logs/
+# 실행 산출물 (컨테이너 안에서 새로 생성)
+.data
+.artifacts
+.runs
 .dvc/cache
 .dvc/tmp
 
-# 문서/메타 (이미지에 불필요)
+# 이미지에 불필요
+scenarios/
 docs/
 README.md
 *.md

@@ -6,7 +6,8 @@
 #   data_prep ──> train ──> evaluate ──> deploy
 #
 # - 각 노드는 `python -m mljob.<stage>` 를 실행하고 train.log + metrics.json 을 남긴다.
-# - DVC 는 deps 의 content hash 를 dvc.lock 에 기록해, 안 바뀐 노드는 재실행을 스킵한다
+# - 실행 산출물은 모두 dot-디렉터리(.data/.artifacts/.runs)에 떨어진다 = git ignore 대상.
+#   대신 DVC 가 content hash 로 추적하므로 안 바뀐 노드는 재실행을 스킵한다
 #   (content-addressed cache = 과제 가산 항목 "cache reuse / 재실행 전략").
 # - DAG 시각화: `dvc dag`  /  실행: `dvc repro`  /  메트릭: `dvc metrics show`
 
@@ -17,39 +18,39 @@ stages:
       - mljob/data_prep.py
       - mljob/telemetry.py
     outs:
-      - data/processed
+      - .data/processed
     metrics:
-      - runs/data_prep/metrics.json:
-          cache: false
+      - .runs/data_prep/metrics.json:
+          cache: true
 
   train:
     cmd: python -m mljob.train --fault none
     deps:
-      - data/processed
+      - .data/processed
       - mljob/train.py
       - mljob/model.py
       - mljob/telemetry.py
     outs:
-      - artifacts/model.pt
+      - .artifacts/model.pt
     metrics:
-      - runs/train/metrics.json:
-          cache: false
+      - .runs/train/metrics.json:
+          cache: true
 
   evaluate:
     cmd: python -m mljob.evaluate
     deps:
-      - data/processed
-      - artifacts/model.pt
+      - .data/processed
+      - .artifacts/model.pt
       - mljob/evaluate.py
     metrics:
-      - runs/evaluate/metrics.json:
-          cache: false
+      - .runs/evaluate/metrics.json:
+          cache: true
 
   deploy:
     cmd: python -m mljob.deploy
     deps:
-      - artifacts/model.pt
-      - runs/evaluate/metrics.json # evaluate 가 끝나야 deploy (순차 보장)
+      - .artifacts/model.pt
+      - .runs/evaluate/metrics.json # evaluate 가 끝나야 deploy (순차 보장)
       - mljob/deploy.py
     outs:
-      - artifacts/deployed
+      - .artifacts/deployed

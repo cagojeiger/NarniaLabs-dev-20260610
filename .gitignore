@@ -1,97 +1,37 @@
-# ---- Python ----
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-dist/
-*.egg-info/
-.eggs/
-*.egg
+# ============================================================
+#  규칙: 이름이 dot(.) 으로 시작하면 "실행하면 생기는 것" → ignore.
+#        그 외 전부 = 커밋 (소스 코드 + scenarios/ = 에이전트 입력 고정본).
+#
+#  실행 산출물은 의도적으로 dot-디렉터리에 모았다:
+#    .venv/  .data/  .artifacts/  .runs/  .dvc/cache  .pytest_cache/ ...
+#  덕분에 아래 `.*` 한 줄이 그것들을 전부 무시한다.
+# ============================================================
 
-# Virtual environments
-.venv/
-venv/
-env/
-ENV/
-.python-version
-
-# Package managers
-.uv/
-pip-log.txt
-# uv.lock 은 재현성을 위해 커밋한다 (의도적으로 ignore 하지 않음)
-
-# ---- Testing / coverage ----
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-.coverage.*
-htmlcov/
-.tox/
-.nox/
-
-# ---- Jupyter ----
-.ipynb_checkpoints/
-
-# ---- ML artifacts ----
-# 학습 산출물·체크포인트·대용량 데이터는 커밋하지 않음
-*.ckpt
-*.pt
-*.pth
-*.h5
-*.onnx
-*.pb
-*.safetensors
-wandb/
-mlruns/
-lightning_logs/
-checkpoints/
-data/raw/
-data/cache/
-# 주의: runs/ 와 logs/ 는 ignore 하지 않는다.
-#   - runs/<stage>/metrics.json : DVC metrics(cache:false), 커밋 대상
-#   - logs/scenario_*/           : (3) 진단 에이전트의 입력 데이터(실제 학습 로그), 제출물
-# 대용량 바이너리 산출물(model.pt, data/processed, artifacts/deployed)은
-# DVC 가 dir-level .gitignore 로 관리하므로 git 에는 올라가지 않는다.
-
-# ---- Secrets / env ----
-.env
-.env.*
-!.env.example
-*.key
-*.pem
-secrets.*
-
-# ---- Dotfiles: 기본 무시, 필요한 것만 예외 ----
+# 1) 모든 dotfile / dot-디렉터리 무시
 .*
+
+# 2) 커밋해야 하는 dotfile 만 예외로 되살린다
 !.gitignore
 !.gitattributes
-!.env.example
-!.github/
 !.dvc
 !.dvcignore
 !.dockerignore
 !.python-version
+!.github
+!.env.example
 
-# ---- OMC (oh-my-claudecode) ----
-.omc/
-.omx/
+# 3) .dvc 안에서 캐시/임시/로컬설정은 무시 (config 등 설정만 커밋)
+.dvc/cache
+.dvc/tmp
+.dvc/config.local
 
-# ---- Editor / IDE ----
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+# 4) Python 바이트코드/빌드 산출물 (dot 이 아니라 별도 명시)
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
 
-# ---- OS ----
-.DS_Store
-Thumbs.db
-
-# ---- Misc ----
-# 주의: *.log 를 통째로 ignore 하지 않는다 — logs/scenario_*/train.log 는
-# (3) 에이전트가 파싱하는 실제 학습 로그(제출물)이기 때문.
-.repos/
-tmp/
+# 5) 혹시 모를 비밀키 (non-dot)
+*.key
+*.pem

@@ -73,7 +73,9 @@ def main() -> int:
     batch_size = args.batch_size if args.batch_size is not None else preset["batch_size"]
     train_limit = preset["train_limit"]
     run_dir = args.run_dir or (
-        "runs/train" if args.fault == "none" else f"logs/scenario_{args.fault}"
+        # happy-path 실행 출력은 ignore 되는 .runs/ 로,
+        # 실패 시나리오는 커밋되는 scenarios/ (에이전트 입력 고정본) 로 남긴다.
+        ".runs/train" if args.fault == "none" else f"scenarios/{args.fault}"
     )
 
     torch.manual_seed(args.seed)

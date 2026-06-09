@@ -4,5 +4,7 @@
 표준 관측 신호(train.log + metrics.json)를 telemetry 모듈을 통해 남긴다.
 """
 
-PROCESSED_DIR = "data/processed"
-ARTIFACT_DIR = "artifacts"
+# 규칙: 실행하면 생기는 산출물은 모두 dot-디렉터리에 둔다 (.gitignore 의 `.*` 가 무시).
+# 커밋되는 것은 소스와 scenarios/(에이전트 입력 고정본)뿐이다.
+PROCESSED_DIR = ".data/processed"
+ARTIFACT_DIR = ".artifacts"

@@ -4,9 +4,9 @@
   "stage": "train",
   "framework": "pytorch",
   "status": "failed",
-  "started_at": "2026-06-09T10:12:26+00:00",
-  "ended_at": "2026-06-09T10:12:27+00:00",
-  "duration_sec": 0.524,
+  "started_at": "2026-06-09T10:32:04+00:00",
+  "ended_at": "2026-06-09T10:32:04+00:00",
+  "duration_sec": 0.634,
   "config": {
     "model": "SmallCNN",
     "dataset": "FashionMNIST",

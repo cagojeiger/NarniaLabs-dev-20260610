@@ -1,5 +1,0 @@
-2026-06-09T10:14:52+00:00 [INFO] run start id=evaluate stage=evaluate framework=pytorch device=cpu cuda=False
-2026-06-09T10:14:52+00:00 [INFO] config {"dataset": "FashionMNIST", "split": "test"}
-2026-06-09T10:14:52+00:00 [INFO] epoch=0 step=0 val_loss=0.5761 val_acc=0.7880
-2026-06-09T10:14:52+00:00 [INFO] test_loss=0.5761 test_acc=0.7880 n=1000
-2026-06-09T10:14:52+00:00 [INFO] run end status=succeeded duration_sec=0.05 steps=1 -> runs/evaluate/metrics.json

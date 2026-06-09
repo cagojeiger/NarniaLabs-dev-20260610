@@ -19,7 +19,7 @@ from mljob.telemetry import RunRecorder, StepRecord
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--run-dir", default="runs/evaluate")
+    ap.add_argument("--run-dir", default=".runs/evaluate")
     args = ap.parse_args()
 
     cfg = {"dataset": "FashionMNIST", "split": "test"}
