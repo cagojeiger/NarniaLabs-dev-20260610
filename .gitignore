@@ -19,8 +19,8 @@ ENV/
 
 # Package managers
 .uv/
-uv.lock
 pip-log.txt
+# uv.lock 은 재현성을 위해 커밋한다 (의도적으로 ignore 하지 않음)
 
 # ---- Testing / coverage ----
 .pytest_cache/
@@ -46,11 +46,15 @@ htmlcov/
 *.safetensors
 wandb/
 mlruns/
-runs/
 lightning_logs/
 checkpoints/
 data/raw/
 data/cache/
+# 주의: runs/ 와 logs/ 는 ignore 하지 않는다.
+#   - runs/<stage>/metrics.json : DVC metrics(cache:false), 커밋 대상
+#   - logs/scenario_*/           : (3) 진단 에이전트의 입력 데이터(실제 학습 로그), 제출물
+# 대용량 바이너리 산출물(model.pt, data/processed, artifacts/deployed)은
+# DVC 가 dir-level .gitignore 로 관리하므로 git 에는 올라가지 않는다.
 
 # ---- Secrets / env ----
 .env
@@ -66,6 +70,10 @@ secrets.*
 !.gitattributes
 !.env.example
 !.github/
+!.dvc
+!.dvcignore
+!.dockerignore
+!.python-version
 
 # ---- OMC (oh-my-claudecode) ----
 .omc/
@@ -83,6 +91,7 @@ secrets.*
 Thumbs.db
 
 # ---- Misc ----
-*.log
+# 주의: *.log 를 통째로 ignore 하지 않는다 — logs/scenario_*/train.log 는
+# (3) 에이전트가 파싱하는 실제 학습 로그(제출물)이기 때문.
 .repos/
 tmp/

@@ -1,0 +1,94 @@
+schema: '2.0'
+stages:
+  data_prep:
+    cmd: python -m mljob.data_prep
+    deps:
+    - path: mljob/data_prep.py
+      hash: md5
+      md5: a86bf1b81d13bc9100a9787231a93575
+      size: 2587
+    - path: mljob/telemetry.py
+      hash: md5
+      md5: 7e560dc340687899d5cf1ee16580a9c9
+      size: 7660
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: d218edd40ae06ae1f2df97638d10cff9.dir
+      size: 34589223
+      nfiles: 3
+    - path: runs/data_prep/metrics.json
+      hash: md5
+      md5: adde00dd4864b2965d3df6e5b27300e7
+      size: 597
+  train:
+    cmd: python -m mljob.train --fault none
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: d218edd40ae06ae1f2df97638d10cff9.dir
+      size: 34589223
+      nfiles: 3
+    - path: mljob/model.py
+      hash: md5
+      md5: 93d2c136ed86e77d8ddf1a84aee82847
+      size: 1503
+    - path: mljob/telemetry.py
+      hash: md5
+      md5: 7e560dc340687899d5cf1ee16580a9c9
+      size: 7660
+    - path: mljob/train.py
+      hash: md5
+      md5: 92ef87c50e25bfb5c5ba3adfe014e846
+      size: 6472
+    outs:
+    - path: artifacts/model.pt
+      hash: md5
+      md5: 796d15a293c3e1931d8bed75933ca390
+      size: 831025
+    - path: runs/train/metrics.json
+      hash: md5
+      md5: d9242fbbc7e4ce14f2eb0628f76352be
+      size: 5667
+  evaluate:
+    cmd: python -m mljob.evaluate
+    deps:
+    - path: artifacts/model.pt
+      hash: md5
+      md5: 796d15a293c3e1931d8bed75933ca390
+      size: 831025
+    - path: data/processed
+      hash: md5
+      md5: d218edd40ae06ae1f2df97638d10cff9.dir
+      size: 34589223
+      nfiles: 3
+    - path: mljob/evaluate.py
+      hash: md5
+      md5: b8258c6079745c0d15cc8b3e2de2272c
+      size: 1606
+    outs:
+    - path: runs/evaluate/metrics.json
+      hash: md5
+      md5: 56bad90442cf354f4681d36e45bb96a3
+      size: 922
+  deploy:
+    cmd: python -m mljob.deploy
+    deps:
+    - path: artifacts/model.pt
+      hash: md5
+      md5: 796d15a293c3e1931d8bed75933ca390
+      size: 831025
+    - path: mljob/deploy.py
+      hash: md5
+      md5: 7e96835a318ef51091d5d0b0be0a0f0c
+      size: 1332
+    - path: runs/evaluate/metrics.json
+      hash: md5
+      md5: 56bad90442cf354f4681d36e45bb96a3
+      size: 922
+    outs:
+    - path: artifacts/deployed
+      hash: md5
+      md5: 03be6e984c12f43d3d87a2b86f487de9.dir
+      size: 831119
+      nfiles: 2

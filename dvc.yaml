@@ -1,0 +1,55 @@
+# (2) 워크플로우 최소 PoC
+#
+# ML 학습 파이프라인을 DAG 로 정의한다. DVC 가 stage 의 deps↔outs 를 매칭해
+# 의존성 그래프를 자동 구성하고(topological), `dvc repro` 로 순서대로 실행한다.
+#
+#   data_prep ──> train ──> evaluate ──> deploy
+#
+# - 각 노드는 `python -m mljob.<stage>` 를 실행하고 train.log + metrics.json 을 남긴다.
+# - DVC 는 deps 의 content hash 를 dvc.lock 에 기록해, 안 바뀐 노드는 재실행을 스킵한다
+#   (content-addressed cache = 과제 가산 항목 "cache reuse / 재실행 전략").
+# - DAG 시각화: `dvc dag`  /  실행: `dvc repro`  /  메트릭: `dvc metrics show`
+
+stages:
+  data_prep:
+    cmd: python -m mljob.data_prep
+    deps:
+      - mljob/data_prep.py
+      - mljob/telemetry.py
+    outs:
+      - data/processed
+    metrics:
+      - runs/data_prep/metrics.json:
+          cache: false
+
+  train:
+    cmd: python -m mljob.train --fault none
+    deps:
+      - data/processed
+      - mljob/train.py
+      - mljob/model.py
+      - mljob/telemetry.py
+    outs:
+      - artifacts/model.pt
+    metrics:
+      - runs/train/metrics.json:
+          cache: false
+
+  evaluate:
+    cmd: python -m mljob.evaluate
+    deps:
+      - data/processed
+      - artifacts/model.pt
+      - mljob/evaluate.py
+    metrics:
+      - runs/evaluate/metrics.json:
+          cache: false
+
+  deploy:
+    cmd: python -m mljob.deploy
+    deps:
+      - artifacts/model.pt
+      - runs/evaluate/metrics.json # evaluate 가 끝나야 deploy (순차 보장)
+      - mljob/deploy.py
+    outs:
+      - artifacts/deployed
